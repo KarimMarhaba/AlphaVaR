@@ -28,3 +28,5 @@ Imports:
     tibble,
     utils,
 VignetteBuilder: knitr
+URL: https://github.com/KarimMarhaba/AlphaVaR
+BugReports: https://github.com/KarimMarhaba/AlphaVaR/issues
