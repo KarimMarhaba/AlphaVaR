@@ -1,0 +1,89 @@
+---
+title: "End-to-End Analysis Workflow"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{End-to-End Analysis Workflow}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.width = 7, 
+  fig.height = 5
+)
+```
+
+## Introduction
+
+AlphaVariantR is designed to streamline the analysis of variant effect scores from AlphaGenome. This tutorial demonstrates the standard workflow: Import -> Quality Control -> Statistical Enrichment -> Gene Prioritization -> Reporting.
+
+library(AlphaVariantR)
+library(dplyr)
+library(ggplot2)
+
+1. Data Import
+
+First, we load the data. For this demonstration, we create a synthetic dataset representing a typical AlphaGenome output.
+
+# Create mock data
+set.seed(42)
+mock_data <- tibble(
+  variant_id = paste0("rs", 1:100),
+  # A mix of high and low scores
+  quantile_score = c(rbeta(50, 1, 5), rbeta(50, 5, 1)), 
+  # Two simulated assays
+  output_type = rep(c("ATAC-seq", "H3K27ac"), each = 50),
+  # Some genes
+  gene_name = sample(c("NPAS3", "NEUROG2", "FOXP2", "GAPDH"), 100, replace = TRUE),
+  # Genomic intervals
+  scored_interval = paste0("chr1:", 1000 + (1:100)*10, "-", 1000 + (1:100)*10 + 20)
+)
+
+# Import into AlphaVarSet object
+# Note how we map columns to the package standards
+av_obj <- av_import_csv(
+  file = "dummy.csv", # Not used here because we inject data directly, but needed for API
+  col_map = list(score = "quantile_score", modality = "output_type")
+)
+
+# Manually overwrite data with our mock data (since we didn't read a real file above)
+av_obj$data <- mock_data %>% 
+  rename(score = quantile_score, modality = output_type, gene = gene_name, coords = scored_interval) %>%
+  mutate(score = as.numeric(score))
+
+2. Quality Control
+
+Check that scores follow expected distributions.
+
+av_plot_qc_dist(av_obj, type = "density")
+
+3. Enrichment Analysis
+
+We test that certain modalities are enriched high-scoring variants.
+
+# Run Fisher's Exact Test and Wilcoxon Shift
+av_obj <- av_calc_enrichment(av_obj, group_by = "modality", threshold = 0.5)
+
+# Visualise Distributions
+av_plot_ridges(av_obj)
+
+4. Gene Analysis
+
+Identify which genes carry the highest burden of functional variants.
+
+# Aggregate variants by gene (Max Score method)
+gene_burden <- av_aggregate_genes(av_obj, method = "max")
+
+# Plot Top 10 Genes
+av_plot_ranking(av_obj)
+
+5. Genomic Context
+
+Inspect the variants for a top candidate gene, e.g., "NPAS3".
+
+try({
+  av_plot_locus(av_obj, gene_name = "NPAS3", flank_bp = 50)
+})
