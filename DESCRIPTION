@@ -12,21 +12,29 @@ Suggests:
     DT,
     knitr,
     plotly,
-    testthat (>= 3.0.0)
+    testthat (>= 3.0.0),
+    TxDb.Hsapiens.UCSC.hg38.knownGene
 Config/testthat/edition: 3
 Imports: 
     dplyr,
     forcats,
+    GenomicFeatures,
+    GenomicRanges,
     ggplot2,
     ggrepel,
     ggridges,
+    IRanges,
+    methods,
     readr,
     rlang,
     rmarkdown,
+    rtracklayer,
+    S4Vectors,
     stats,
     stringr,
     tibble,
-    utils,
+    utils
 VignetteBuilder: knitr
 URL: https://github.com/KarimMarhaba/AlphaVaR
 BugReports: https://github.com/KarimMarhaba/AlphaVaR/issues
+biocViews: Software
