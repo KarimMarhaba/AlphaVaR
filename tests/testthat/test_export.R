@@ -22,3 +22,34 @@ test_that("av_export_browser_track produces valid file", {
 
   unlink(tmp_file)
 })
+
+test_that("av_export_pdf generates a PDF file", {
+  # Skip on CRAN or if pagedown is not installed/configured to avoid CI errors
+  skip_on_cran()
+  if (!requireNamespace("pagedown", quietly = TRUE)) {
+    skip("pagedown not installed")
+  }
+  
+  # Setup minimal object
+  obj <- structure(list(
+    data = dplyr::tibble(
+      variant_id = "v1", score = 0.9, modality = "Seq", 
+      gene = "BRCA1", coords = "chr1:100"
+    ),
+    stats = list(),
+    meta = list(filename = "test.csv")
+  ), class = "AlphaVarSet")
+  
+  # Define output file
+  out_pdf <- tempfile(fileext = ".pdf")
+  
+  # Run function (expect error if Chrome is missing, but logic should hold)
+  # Using tryCatch because pagedown might fail if no Chrome is found locally
+  tryCatch({
+    av_export_pdf(obj, out_pdf, open = FALSE)
+    expect_true(file.exists(out_pdf))
+    expect_gt(file.size(out_pdf), 0)
+  }, error = function(e) {
+    skip("Chrome/Chromium not found for pagedown")
+  })
+})

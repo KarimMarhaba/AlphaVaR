@@ -3,7 +3,7 @@
 ## 1. Project Overview
 **AlphaVaR** is an R package designed to analyze, visualize, and report variant effect scores derived from AlphaGenome (deep learning models).
 **Goal:** Transform raw CSV outputs (variant scores) into biological insights (gene burden, tissue enrichment, genomic context).
-**Status:** Functional. Core Stats & Visualization stable. **Phases 1 (Annotation), 2 (Validation), 3 (Accessibility/Viz), and 4 (Clinical Integration) are implemented.**
+**Status:** Functional. **Phases 1 (Annotation), 2 (Validation), 3 (Accessibility/Viz), and 4 (Clinical Integration) are fully implemented.** PDF Export capability added.
 
 ## 2. Core Data Structure (The "Contract")
 The package relies on a central S3 class object: `AlphaVarSet`.
@@ -80,6 +80,7 @@ The package follows a strict modular structure in the `R/` directory.
 ### Reporting
 * **`R/09_report.R`**:
     * `av_create_report(obj)`: Renders interactive HTML report (RMarkdown).
+    * `av_export_pdf(obj, output_file)`: Converts the HTML report to a static PDF using headless Chrome (`pagedown`).
 
 ### Utilities
 * **`R/globals.R`**: Global variable declarations.
@@ -91,7 +92,7 @@ The package follows a strict modular structure in the `R/` directory.
 * **Bioinformatics:**
     * *Imports:* `GenomicRanges`, `GenomicFeatures`, `IRanges`, `S4Vectors`, `methods`
     * *Suggests:* `TxDb.Hsapiens.UCSC.hg38.knownGene`, `rtracklayer` (for BED import), `VariantAnnotation` (for ClinVar), `Rsamtools` (for Tabix indexing)
-* **Reporting:** `rmarkdown`, `DT`, `plotly`
+* **Reporting:** `rmarkdown`, `DT`, `plotly`, `pagedown` (for PDF export)
 * **Dev:** `testthat`, `devtools`, `roxygen2`
 
 ## 5. Development Guidelines

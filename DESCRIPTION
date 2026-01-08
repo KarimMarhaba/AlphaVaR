@@ -11,6 +11,7 @@ RoxygenNote: 7.3.3
 Suggests: 
     DT,
     knitr,
+    pagedown,
     plotly,
     Rsamtools,
     testthat (>= 3.0.0),
