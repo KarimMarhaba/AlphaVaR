@@ -12,5 +12,5 @@ utils::globalVariables(c(
   "p_val", "median_diff",
   "gene_score", "n_variants",
   "chrom", "start", "end", "x", "y",
-  ".data", "where" 
+  ".data", "where", "range_part" 
 ))

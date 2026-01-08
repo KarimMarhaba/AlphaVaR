@@ -68,4 +68,3 @@ Please implement the following features in the strict order provided. Each phase
 * **Documentation:** Update `roxygen2` headers immediately.
 
 ## NEXT ACTION
-Start with **PHASE 1, Task 1 (av_annotate_genes)**.

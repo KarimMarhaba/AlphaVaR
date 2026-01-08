@@ -172,3 +172,84 @@ av_analyze_overlap <- function(comparison_result, top_percentile = 0.05, high_is
     overlap_fraction = n_intersect / (n_intersect + n_alpha_only + n_ext_only)
   ))
 }
+
+#' Plot Venn Diagram of Top Hits
+#'
+#' Visualizes the overlap of top-ranked variants between AlphaGenome and external scores
+#' using a 2-circle Venn diagram.
+#'
+#' @param overlap_result The list output from \code{av_analyze_overlap}.
+#' @param fill_colors Character vector of length 2. Colors for the circles (default: AlphaVaR blue and External grey/red).
+#'
+#' @return A ggplot object.
+#' @export
+#' @importFrom ggplot2 ggplot geom_polygon annotate theme_void labs coord_fixed scale_fill_identity aes
+#' @importFrom tibble tibble
+av_plot_compare_venn <- function(overlap_result, fill_colors = c("#3498db", "#e74c3c")) {
+  
+  counts <- overlap_result$counts
+  
+  # Helper to generate circle coordinates
+  # We use simple trigonometry to draw circles without needing 'ggforce'
+  get_circle <- function(center_x, center_y, radius = 1.5) {
+    theta <- seq(0, 2 * pi, length.out = 200)
+    tibble::tibble(
+      x = center_x + radius * cos(theta),
+      y = center_y + radius * sin(theta)
+    )
+  }
+  
+  # Create Data for Plotting
+  # Left Circle: AlphaVaR (Center -1, 0)
+  c1 <- get_circle(-0.8, 0)
+  c1$group <- "AlphaVaR"
+  c1$fill <- fill_colors[1]
+  
+  # Right Circle: External (Center 1, 0)
+  c2 <- get_circle(0.8, 0)
+  c2$group <- "External"
+  c2$fill <- fill_colors[2]
+  
+  plot_df <- rbind(c1, c2)
+  
+  # Labels positions
+  # Left (Alpha Only), Center (Intersection), Right (External Only)
+  label_df <- tibble::tibble(
+    x = c(-1.5, 0, 1.5),
+    y = c(0, 0, 0),
+    label = c(
+      paste0("AlphaVaR\nOnly\n", counts["alpha_only"]),
+      paste0("Overlap\n", counts["intersection"]),
+      paste0("External\nOnly\n", counts["external_only"])
+    ),
+    color = c("white", "white", "white") # Text color
+  )
+  
+  # Title info
+  pct <- overlap_result$cutoff_percentile * 100
+  
+  # Plotting
+  p <- ggplot2::ggplot() +
+    # Draw Circles
+    ggplot2::geom_polygon(
+      data = plot_df,
+      ggplot2::aes(x = .data$x, y = .data$y, group = .data$group, fill = .data$fill),
+      alpha = 0.6,
+      color = "white"
+    ) +
+    # Add Text Labels
+    ggplot2::annotate(
+      "text", x = label_df$x, y = label_df$y, label = label_df$label,
+      size = 5, fontface = "bold", color = "white" # Contrast text
+    ) +
+    # Settings
+    ggplot2::scale_fill_identity() +
+    ggplot2::coord_fixed() +
+    ggplot2::theme_void() + # Remove axes/grid
+    ggplot2::labs(
+      title = paste0("Top ", pct, "% Hits Overlap"),
+      subtitle = paste0("Intersection Count: ", counts["intersection"])
+    )
+  
+  return(p)
+}
