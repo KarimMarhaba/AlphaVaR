@@ -6,14 +6,13 @@ output: github_document
 
 **AlphaVaR** provides a robust statistical framework to analyze variant effect scores derived from AlphaGenome. It bridges the gap between raw deep learning scores and biological insight.
 
-The package covers the full workflow from data ingestion to clinical reporting:
-**Annotation** (Phase 1), **Validation** (Phase 2), **Visualization** (Phase 3), and **Clinical Integration** (Phase 4).
+The package covers the full workflow from data ingestion to clinical reporting: **Annotation** (Phase 1), **Validation** (Phase 2), **Visualization** (Phase 3), and **Clinical Integration** (Phase 4).
 
 ## Workflow Overview
 
 How `AlphaVaR` processes your data:
 
-```mermaid
+``` mermaid
 graph TD
     %% Nodes and Styles
     classDef input fill:#e1f5fe,stroke:#01579b,stroke-width:2px;
@@ -22,7 +21,7 @@ graph TD
     classDef output fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px;
 
     %% 1. INPUT
-    UserCSV[("📄 Input CSV<br/>(Scores, VariantID, Modality)")]:::input
+    UserCSV[(" Input CSV<br/>(Scores, VariantID, Modality)")]:::input
     
     %% 2. INGESTION
     subgraph Ingestion ["1. Ingestion"]
@@ -30,7 +29,7 @@ graph TD
     end
 
     %% 3. THE OBJECT
-    AVSet{{"📦 AlphaVarSet Object<br/>(The Central Hub)"}}:::object
+    AVSet{{" AlphaVarSet Object<br/>(The Central Hub)"}}:::object
 
     %% 4. PROCESSING & ANNOTATION
     subgraph Processing ["2. Processing & Annotation"]
@@ -41,8 +40,8 @@ graph TD
 
     %% 5. OUTPUTS
     subgraph Outputs ["3. Outputs & Insights"]
-        Report[("📄 HTML/PDF Report<br/>av_create_report()")]:::output
-        App[("💻 Shiny App Explorer<br/>av_run_shiny()")]:::output
+        Report[(" HTML/PDF Report<br/>av_create_report()")]:::output
+        App[(" Shiny App Explorer<br/>av_run_shiny()")]:::output
         Tracks[("genome.bedgraph<br/>Browser Export")]:::output
         Plots[("📊 Plots<br/>Volcano, Ridges, Locus")]:::output
     end
@@ -64,13 +63,19 @@ graph TD
     AVSet --> Tracks
     AVSet --> Plots
 ```
+Understanding the Workflow: The diagram illustrates the central role of the AlphaVarSet object. Think of it as the "single source of truth."
+
+    Input: You start by loading raw data into this object (Blue).
+
+    Cycle: You pass the object to analysis functions (Green), which add layers of information (stats, biology) and return the updated object.
+
+    Output: At any point, you can generate reports or visualizations (Purple) based on the current state of the object.
 
 ## Installation
 
-You can install the development version directly from GitHub. 
-Because `AlphaVaR` depends on Bioconductor packages, dependencies will be handled automatically via the `Remotes` field.
+You can install the development version directly from GitHub. Because `AlphaVaR` depends on Bioconductor packages, dependencies will be handled automatically via the `Remotes` field.
 
-```r
+``` r
 # install.packages("devtools")
 devtools::install_github("KarimMarhaba/AlphaVaR", dependencies = TRUE)
 ```
@@ -79,7 +84,7 @@ devtools::install_github("KarimMarhaba/AlphaVaR", dependencies = TRUE)
 
 ## Quick Start
 
-```r
+``` r
 library(AlphaVaR)
 
 # 1. Import Data

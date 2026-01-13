@@ -22,7 +22,7 @@ graph TD
     classDef output fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px;
 
     %% 1. INPUT
-    UserCSV[("📄 Input CSV<br/>(Scores, VariantID, Modality)")]:::input
+    UserCSV[(" Input CSV<br/>(Scores, VariantID, Modality)")]:::input
     
     %% 2. INGESTION
     subgraph Ingestion ["1. Ingestion"]
@@ -30,7 +30,7 @@ graph TD
     end
 
     %% 3. THE OBJECT
-    AVSet{{"📦 AlphaVarSet Object<br/>(The Central Hub)"}}:::object
+    AVSet{{" AlphaVarSet Object<br/>(The Central Hub)"}}:::object
 
     %% 4. PROCESSING & ANNOTATION
     subgraph Processing ["2. Processing & Annotation"]
@@ -41,8 +41,8 @@ graph TD
 
     %% 5. OUTPUTS
     subgraph Outputs ["3. Outputs & Insights"]
-        Report[("📄 HTML/PDF Report<br/>av_create_report()")]:::output
-        App[("💻 Shiny App Explorer<br/>av_run_shiny()")]:::output
+        Report[(" HTML/PDF Report<br/>av_create_report()")]:::output
+        App[(" Shiny App Explorer<br/>av_run_shiny()")]:::output
         Tracks[("genome.bedgraph<br/>Browser Export")]:::output
         Plots[("📊 Plots<br/>Volcano, Ridges, Locus")]:::output
     end
@@ -64,6 +64,15 @@ graph TD
     AVSet --> Tracks
     AVSet --> Plots
 ```
+
+Understanding the Workflow: The diagram illustrates the central role of
+the AlphaVarSet object. Think of it as the “single source of truth.”
+
+    Input: You start by loading raw data into this object (Blue).
+
+    Cycle: You pass the object to analysis functions (Green), which add layers of information (stats, biology) and return the updated object.
+
+    Output: At any point, you can generate reports or visualizations (Purple) based on the current state of the object.
 
 ## Installation
 
