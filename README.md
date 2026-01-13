@@ -1,19 +1,19 @@
----
-output: github_document
----
 
 # AlphaVaR
 
-**AlphaVaR** provides a robust statistical framework to analyze variant effect scores derived from AlphaGenome. It bridges the gap between raw deep learning scores and biological insight.
+**AlphaVaR** provides a robust statistical framework to analyze variant
+effect scores derived from AlphaGenome. It bridges the gap between raw
+deep learning scores and biological insight.
 
-The package covers the full workflow from data ingestion to clinical reporting:
-**Annotation** (Phase 1), **Validation** (Phase 2), **Visualization** (Phase 3), and **Clinical Integration** (Phase 4).
+The package covers the full workflow from data ingestion to clinical
+reporting: **Annotation** (Phase 1), **Validation** (Phase 2),
+**Visualization** (Phase 3), and **Clinical Integration** (Phase 4).
 
 ## Workflow Overview
 
 How `AlphaVaR` processes your data:
 
-```mermaid
+``` mermaid
 graph TD
     %% Nodes and Styles
     classDef input fill:#e1f5fe,stroke:#01579b,stroke-width:2px;
@@ -67,19 +67,21 @@ graph TD
 
 ## Installation
 
-You can install the development version directly from GitHub. 
-Because `AlphaVaR` depends on Bioconductor packages, dependencies will be handled automatically via the `Remotes` field.
+You can install the development version directly from GitHub. Because
+`AlphaVaR` depends on Bioconductor packages, dependencies will be
+handled automatically via the `Remotes` field.
 
-```r
+``` r
 # install.packages("devtools")
 devtools::install_github("KarimMarhaba/AlphaVaR", dependencies = TRUE)
 ```
 
-**Note:** Ensure you have configured your GitHub Personal Access Token (PAT) if this is a private repository.
+**Note:** Ensure you have configured your GitHub Personal Access Token
+(PAT) if this is a private repository.
 
 ## Quick Start
 
-```r
+``` r
 library(AlphaVaR)
 
 # 1. Import Data
@@ -94,4 +96,5 @@ av_set <- av_set %>%
 av_create_report(av_set, output_file = "Analysis_Report.html")
 ```
 
-For more details, see `vignette("workflow_tutorial", package = "AlphaVaR")`.
+For more details, see
+`vignette("workflow_tutorial", package = "AlphaVaR")`.

@@ -45,7 +45,7 @@
 - [ ] **Git Push:**
     - Source Control (links) -> Message ("Feat: ...") -> Commit -> Sync.
 - [ ] **Context Update:**
-    - Falls sich Struktur drastisch änderte: `DEVELOPER_CONTEXT.md` anpassen.
+    - Falls sich Struktur drastisch änderte: `DEVELOPER_CONTEXT.md` und ggf. `README.RMD` und/oder `DESCRIPTION`  anpassen.
 
 ---
 

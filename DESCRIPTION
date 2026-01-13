@@ -1,9 +1,11 @@
 Package: AlphaVaR
-Title: What the Package Does (One Line, Title Case)
+Title: Analysis and Visualization of AlphaGenome Variant Effect Scores
 Version: 0.0.0.9000
 Authors@R: 
-    person("First", "Last", , "first.last@example.com", role = c("aut", "cre"))
-Description: What the package does (one paragraph).
+    person("Karim", "Marhaba", , "ka.marhaba@gmx.de", role = c("aut", "cre"))
+Description: Transforms raw CSV outputs from AlphaGenome into biological insights. 
+    Includes annotation, statistical enrichment calculation, quality control, 
+    and report generation.
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
@@ -39,6 +41,13 @@ Imports:
     tibble,
     tidyr,
     utils
+Remotes:
+    bioc::GenomicRanges,
+    bioc::GenomicFeatures,
+    bioc::IRanges,
+    bioc::S4Vectors,
+    bioc::TxDb.Hsapiens.UCSC.hg38.knownGene,
+    bioc::rtracklayer
 VignetteBuilder: knitr
 URL: https://github.com/KarimMarhaba/AlphaVaR
 BugReports: https://github.com/KarimMarhaba/AlphaVaR/issues
