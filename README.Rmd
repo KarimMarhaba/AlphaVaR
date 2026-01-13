@@ -65,11 +65,11 @@ graph TD
 ```
 Understanding the Workflow: The diagram illustrates the central role of the AlphaVarSet object. Think of it as the "single source of truth."
 
-    Input: You start by loading raw data into this object (Blue).
+Input: You start by loading raw data into this object (Blue).
 
-    Cycle: You pass the object to analysis functions (Green), which add layers of information (stats, biology) and return the updated object.
+Cycle: You pass the object to analysis functions (Green), which add layers of information (stats, biology) and return the updated object.
 
-    Output: At any point, you can generate reports or visualizations (Purple) based on the current state of the object.
+Output: At any point, you can generate reports or visualizations (Purple) based on the current state of the object.
 
 ## Installation
 
